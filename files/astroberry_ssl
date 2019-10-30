@@ -1,0 +1,27 @@
+upstream root {
+    server 127.0.0.1:80;
+}
+
+server {
+    listen 443;
+
+    ssl_certificate           /etc/ssl/astroberry.crt;
+    ssl_certificate_key       /etc/ssl/astroberry.key;
+
+    ssl on;
+    ssl_session_cache  builtin:1000  shared:SSL:10m;
+    ssl_protocols  TLSv1 TLSv1.1 TLSv1.2;
+    ssl_ciphers HIGH:!aNULL:!eNULL:!EXPORT:!CAMELLIA:!DES:!MD5:!PSK:!RC4;
+    ssl_prefer_server_ciphers on;
+
+
+    location / {
+       proxy_http_version  1.1;
+       proxy_pass          http://root/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout 90;
+       proxy_buffering off;
+    }
+
+}

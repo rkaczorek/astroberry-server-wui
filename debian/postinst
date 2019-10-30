@@ -1,0 +1,49 @@
+#!/bin/bash
+# postinst script for astroberry-server-wui
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Set password for VNC remote desktop
+if [ ! -e /root/.vnc/config.d/vncserver-x11 ]; then
+    echo -e "${RED}=== Set password for VNC remote desktop ===${NC}"
+    vncpasswd -service
+    echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
+fi
+
+# Add indiweb and dependencies
+pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb
+
+# Create symbolic links
+ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
+ln -sf /etc/nginx/sites-available/astroberry_ssl /etc/nginx/sites-enabled/
+
+# Remove default site for nginx
+rm -rf /etc/nginx/sites-enabled/default
+
+# Link astroberry version file
+ln -sf /etc/astroberry.version /var/www/html/version.html
+
+# Set log directory access rights
+if [ ! -d /var/log/astroberry ]; then
+    mkdir /var/log/astroberry
+    chmod 750 /var/log/astroberry
+    chown nobody:adm /var/log/astroberry
+fi
+
+# INDI web manager look and feel patch
+indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
+if [ $indiweb_dir ]; then
+    ln -sf /var/www/vnc/app/images/webmanager.svg $indiweb_dir/views/img/
+    ln -sf /var/www/vnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
+    cp $indiweb_dir/views/css/schoolhouse.css $indiweb_dir/views/css/schoolhouse.css.bak
+    cat /var/www/html/files/indiweb.css >> $indiweb_dir/views/css/schoolhouse.css
+fi
+
+# Activate basic services
+systemctl daemon-reload
+systemctl enable vncserver-x11-serviced.service && systemctl restart vncserver-x11-serviced.service
+systemctl enable gpspanel.service && systemctl restart gpspanel.service
+systemctl enable indiwebmanager.service && systemctl restart indiwebmanager.service
+systemctl enable novnc.service && systemctl restart novnc.service
+systemctl enable nginx.service && systemctl restart nginx.service

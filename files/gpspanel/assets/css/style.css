@@ -1,0 +1,196 @@
+/*
+  Copyright(c) 2017 Radek Kaczorek  <rkaczorek AT gmail DOT com>
+
+ This library is free software; you can redistribute it and/or
+ modify it under the terms of the GNU Library General Public
+ License version 2 as published by the Free Software Foundation.
+
+ This library is distributed in the hope that it will be useful,
+ but WITHOUT ANY WARRANTY; without even the implied warranty of
+ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ Library General Public License for more details.
+
+ You should have received a copy of the GNU Library General Public License
+ along with this library; see the file COPYING.LIB.  If not, write to
+ the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ Boston, MA 02110-1301, USA.
+*/
+
+@font-face {font-family: 'Roboto Light';font-style: normal;src: local('?'), url('Roboto-Light.ttf') format('truetype');}
+
+body {
+	float: left;
+	background: rgb(110, 132, 163);
+	font-family: 'Roboto Light', Arial, Helvetica;
+	font-size:16px;
+	font-weight: normal;
+	color: #fff;
+	padding: 0;
+}
+
+h1 {
+	background-image: url("/assets/img/gps.svg");
+	background-repeat: no-repeat;
+	background-position: 5px 5px;
+	background-color: rgb(110, 132, 163);
+	border-radius: 5px;
+	margin-top: 0px;
+	padding: 0px 5px 15px 35px;
+	font-family: 'Roboto Light', Arial, Helvetica;
+	font-size: 20px;
+	color: white;
+	height: 1.2em;
+}
+
+h2 {
+	font-size: 1.2em;
+}
+
+a {
+	color: black;
+	text-decoration: none;
+}
+
+a:hover {
+        color: red;
+}
+
+button {
+	margin-top: 5px;
+	width: 157px;
+}
+
+.warning {
+    color: #FF0000;
+}
+
+.container {
+	width: 480px;    
+}
+
+#coordtime {
+	width: 480px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	color: #eee;
+}
+
+#coordtime span {
+	display: inline-block;
+	border: 0px solid;
+	text-align: left;
+}
+
+.coordlabel {
+	font-size: 0.8em;
+}
+
+.coord {
+    width: 150px;
+	margin-left: 5px;
+	font-weight: bold;
+	color: white;
+}
+
+.timelabel {
+	width: 100px;
+	margin-top: 5px;
+	font-size: 0.8em;
+}
+
+.time {
+	width: 280px;
+	margin-top: 5px;
+	margin-left: 5px;
+	font-weight: bold;
+	color: white;
+}
+
+#displayctl {
+	margin-top: 5px;
+}
+
+#mapcontainer, #skymapcontainer, #gpsdetailscontainer {
+	width: 480px;
+	margin-top: 10px;
+}
+
+#mapcontainer {
+	display:block;
+	margin-top: 10px;
+}
+
+#skymapcontainer {
+	display:none;
+}
+
+#gpsdetailscontainer {
+	display:none;
+}
+
+#map {
+	width: 480px;
+	height: 400px;
+}
+
+#skymap {
+	display: block;
+	width: 340px;
+	height: 340px;
+	margin: 20px auto 0px auto;
+}
+
+#legend {
+	text-align: left;
+	font-family: 'Roboto Light', Arial, Helvetica;
+	font-size: 0.65em;
+	margin-top: 10px;
+	margin-left: 30px;
+}
+
+#gpsdetails {
+	display: block;
+	width: 460px;
+	font-family: Arial, Helvetica;
+	font-size: 0.80em;
+}
+
+#gpsinfo {
+	display: inline-block;
+	vertical-align: top;
+	width: 45%;
+}
+#gpssats {
+	display: inline-block;
+	vertical-align: top;
+	margin-left: 30px;
+}
+
+#gpsfix {
+	background-color: rgba(64,64,64,0.5);
+	padding: 10px 10px 2px 10px;
+	border-radius: 5px;
+	margin-top: 50px;
+	width: 220px;
+	margin: auto auto;
+	font-size: 2.0em;
+	text-align: center;
+	color: red;
+}
+
+table, th, td {
+	border: none;
+	font-family: Arial, Helvetica;
+	font-size: 1.0em;
+	color: #eee;
+}
+
+.blink {
+  animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}

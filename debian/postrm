@@ -1,0 +1,36 @@
+#!/bin/bash
+# postrm script for astroberry-server-wui
+
+RED='\033[0;31m'
+NC='\033[0m'
+
+# Disable astroberry site
+rm -rf /etc/nginx/sites-enabled/astroberry || true
+rm -rf /etc/nginx/sites-enabled/astroberry_ssl || true
+
+# Reactivate default site for nginx
+ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+
+# Reload nginx configuration
+systemctl reload nginx
+
+# Remove astroberry version file
+rm -rf /var/www/html/version.html || true
+
+# Remove indiweb and dependencies
+pip3 uninstall -y gps3 python-socketio indiweb
+
+# Remove astroberry logs
+read -p "Remove astroberry logs? (y/n) " yn
+if [ "$yn" != "${yn#[Yy]}" ]; then
+    rm -rf /var/log/astroberry
+fi
+
+# Remove VNC password
+if [ -e /root/.vnc/config.d/vncserver-x11 ]; then
+    read -p "Remove password for and disable VNC remote desktop? (y/n) " yn
+    if [ "$yn" != "${yn#[Yy]}" ]; then
+        systemctl stop vncserver-x11-serviced.service && systemctl disable vncserver-x11-serviced.service
+        rm -rf /root/.vnc
+    fi
+fi

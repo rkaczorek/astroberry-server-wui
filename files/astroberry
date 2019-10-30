@@ -1,0 +1,103 @@
+upstream novnc {
+    server 127.0.0.1:8080;
+}
+
+upstream indiwebmanager {
+    server 127.0.0.1:8624;
+}
+
+upstream gpspanel {
+    server 127.0.0.1:8625;
+}
+
+server {
+    listen 80;
+
+    root /var/www/html;
+
+    index index.html;
+
+    server_name _;
+
+    location / {
+       try_files $uri $uri/ =404;
+    }
+
+    ########### noVNC block ##########
+
+    location /desktop/ {
+       proxy_http_version  1.1;
+       proxy_pass          http://novnc/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout 90;
+       proxy_buffering off;
+    }
+
+    location /websockify {
+       proxy_http_version 1.1;
+       proxy_pass http://novnc/;
+       proxy_set_header Upgrade $http_upgrade;
+       proxy_set_header Connection "upgrade";
+       proxy_read_timeout 90;
+       proxy_buffering off;
+    }
+
+    ########### INDI webmanager block ########## 
+
+    location /indiwebmanager/ {
+       proxy_http_version  1.1;
+       proxy_pass          http://indiwebmanager/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout  90;
+       proxy_buffering     off;
+    }
+
+    location /static/ {
+       proxy_http_version  1.1;
+       proxy_pass          http://indiwebmanager/static/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout 90;
+       proxy_buffering off;
+    }
+
+    location /api/ {
+       proxy_http_version  1.1;
+       proxy_pass          http://indiwebmanager/api/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout 90;
+       proxy_buffering off;
+    }
+
+    ########### GPS panel block ########## 
+
+    location /gpspanel/ {
+       proxy_http_version  1.1;
+       proxy_pass          http://gpspanel/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout  90;
+       proxy_buffering     off;
+    }
+
+    location /assets/ {
+       proxy_http_version  1.1;
+       proxy_pass          http://gpspanel/assets/;
+       proxy_set_header    Upgrade $http_upgrade;
+       proxy_set_header    Connection "upgrade";
+       proxy_read_timeout 90;
+       proxy_buffering off;
+    }
+
+    location /socket.io {
+      proxy_http_version  1.1;
+      proxy_pass          http://gpspanel/socket.io;
+      proxy_set_header    Upgrade $http_upgrade;
+      proxy_set_header    Connection "upgrade";
+      proxy_read_timeout  90;
+      proxy_buffering     off;
+    }
+}
