@@ -19,18 +19,3 @@ rm -rf /var/www/html/version.html || true
 
 # Remove indiweb and dependencies
 pip3 uninstall -y gps3 python-socketio indiweb
-
-# Remove astroberry logs
-read -p "Remove astroberry logs? (y/n) " yn
-if [ "$yn" != "${yn#[Yy]}" ]; then
-    rm -rf /var/log/astroberry
-fi
-
-# Remove VNC password
-if [ -e /root/.vnc/config.d/vncserver-x11 ]; then
-    read -p "Remove password for and disable VNC remote desktop? (y/n) " yn
-    if [ "$yn" != "${yn#[Yy]}" ]; then
-        systemctl stop vncserver-x11-serviced.service && systemctl disable vncserver-x11-serviced.service
-        rm -rf /root/.vnc
-    fi
-fi
