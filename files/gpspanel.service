@@ -1,6 +1,6 @@
 [Unit]
 Description=GPS Panel
-After=multi-user.target
+After=multi-user.target gpsd.socket
 
 [Service]
 Type=idle

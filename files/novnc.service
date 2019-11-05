@@ -4,7 +4,7 @@ After=multi-user.target vncserver-x11-serviced.service
 
 [Service]
 User=nobody
-ExecStart=/usr/bin/websockify --log-file=/var/log/astroberry/novnc.log --web=/var/www/vnc/ 8080 localhost:5900
+ExecStart=/usr/bin/websockify --log-file=/var/log/astroberry/novnc.log --web=/var/www/novnc/ 8080 localhost:5900
 ExecStop=/usr/bin/pkill websockify
 Restart=on-failure
 RestartSec=3

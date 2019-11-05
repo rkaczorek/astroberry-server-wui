@@ -18,4 +18,10 @@ systemctl reload nginx
 rm -rf /var/www/html/version.html || true
 
 # Remove indiweb and dependencies
+indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
+if [ $indiweb_dir ]; then
+    mv -f $indiweb_dir/views/css/schoolhouse.css.bak $indiweb_dir/views/css/schoolhouse.css
+    rm -rf $indiweb_dir/views/img/webmanager.svg
+    rm -rf $indiweb_dir/views/fonts/Roboto-Light.ttf
+fi
 pip3 uninstall -y gps3 python-socketio indiweb

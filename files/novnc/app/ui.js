@@ -301,15 +301,15 @@ const UI = {
             .addEventListener('click', UI.togglePowerPanel);
     },
 
-	addWebmanagerControlHandlers: function() {
-		document.getElementById("indi_webmanager_controls_button")
-			.addEventListener('click', UI.toggleWebmanagerPanel);
-	},
+    addWebmanagerControlHandlers: function() {
+        document.getElementById("indi_webmanager_controls_button")
+            .addEventListener('click', UI.toggleWebmanagerPanel);
+    },
 
-	addGPSControlHandlers: function() {
-		document.getElementById("gps_controls_button")
-			.addEventListener('click', UI.toggleGPSPanel);
-	},
+    addGPSControlHandlers: function() {
+        document.getElementById("gps_controls_button")
+            .addEventListener('click', UI.toggleGPSPanel);
+    },
 
     addConnectionControlHandlers() {
         document.getElementById("noVNC_disconnect_button")
@@ -439,7 +439,6 @@ const UI = {
             UI.enableSetting('port');
             UI.enableSetting('path');
             UI.enableSetting('repeaterID');
-            UI.updateWebmanagerButton();
             UI.updatePowerButton();
             UI.keepControlbar();
         }
@@ -888,19 +887,6 @@ const UI = {
 			UI.closeWebmanagerPanel();
 		} else {
 			UI.openWebmanagerPanel();
-		}
-	},
-
-   // disable INDI Webmanager if not loggedin or in view only mode
-	updateWebmanagerButton: function(ver) {
-		if (ver >= 1 && !UI.rfb.viewOnly) {
-			document.getElementById('indi_webmanager_controls_button')
-				.classList.remove("noVNC_hidden");
-		} else {
-			document.getElementById('indi_webmanager_controls_button')
-				.classList.add("noVNC_hidden");
-			// Close Webmanager panel if open
-			UI.closeWebmanagerPanel();
 		}
 	},
 
