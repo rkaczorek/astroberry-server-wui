@@ -69,40 +69,33 @@ button {
 }
 
 #coordtime {
+	display: block;
 	width: 480px;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	color: #eee;
+	color: #fff;
+	margin: 10px auto 0px auto;
 }
 
-#coordtime span {
-	display: inline-block;
-	border: 0px solid;
-	text-align: left;
-}
-
-.coordlabel {
-	font-size: 0.8em;
-}
-
-.coord {
-    width: 150px;
+.label {
+	width: 70px;
 	margin-left: 5px;
-	font-weight: bold;
-	color: white;
 }
 
-.timelabel {
-	width: 100px;
-	margin-top: 5px;
-	font-size: 0.8em;
+.gpsfix_obtained {
+	background-color: #99cc00;
+}
+
+.gpsvalues {
+	width: 150px;
+	color: white;
+	font-size: 0.90em;
+	display: inline-block;
+	text-align: left;
+	margin-left: 5px;
 }
 
 .time {
-	width: 280px;
 	margin-top: 5px;
 	margin-left: 5px;
-	font-weight: bold;
 	color: white;
 }
 
@@ -112,6 +105,7 @@ button {
 
 #mapcontainer, #skymapcontainer, #gpsdetailscontainer {
 	width: 480px;
+	height: 400px;
 	margin-top: 10px;
 }
 
@@ -122,15 +116,27 @@ button {
 
 #skymapcontainer {
 	display:none;
+	margin-bottom: -10px;
 }
 
 #gpsdetailscontainer {
 	display:none;
+	position: relative;
+	overflow:hidden;
 }
 
 #map {
 	width: 480px;
 	height: 400px;
+}
+
+#sschart {
+	display: block;
+	height:100px;
+	position:absolute;
+	bottom: 0px;
+	margin-left: 5px;
+	z-index: 100;
 }
 
 #skymap {
@@ -141,48 +147,41 @@ button {
 }
 
 #legend {
+	width: 350px;
 	text-align: left;
 	font-family: 'Roboto Light', Arial, Helvetica;
-	font-size: 0.65em;
-	margin-top: 10px;
-	margin-left: 30px;
+	font-size: 0.80em;
+	margin: 5px auto 0px auto;
 }
 
 #gpsdetails {
 	display: block;
 	width: 460px;
-	font-family: Arial, Helvetica;
+	font-family: 'Roboto Light', Arial, Helvetica;
 	font-size: 0.80em;
 }
 
 #gpsinfo {
 	display: inline-block;
 	vertical-align: top;
-	width: 45%;
+	width: 50%;
 }
+
+.gpshdr {
+	width: 90px;
+}
+
 #gpssats {
 	display: inline-block;
 	vertical-align: top;
-	margin-left: 30px;
-}
-
-#gpsfix {
-	background-color: rgba(64,64,64,0.5);
-	padding: 10px 10px 2px 10px;
-	border-radius: 5px;
-	margin-top: 50px;
-	width: 220px;
-	margin: auto auto;
-	font-size: 2.0em;
-	text-align: center;
-	color: red;
+	margin-left: 20px;
 }
 
 table, th, td {
 	border: none;
-	font-family: Arial, Helvetica;
+	font-family: 'Roboto Light', Arial, Helvetica;
 	font-size: 1.0em;
-	color: #eee;
+	color: #fff;
 }
 
 .blink {

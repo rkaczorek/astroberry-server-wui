@@ -19,10 +19,10 @@
 
 from gps3 import gps3
 from gevent import monkey; monkey.patch_all()
-from flask import Flask, render_template, request
+from flask import Flask, render_template
 from flask_socketio import SocketIO
 from PIL import Image, ImageDraw, ImageFont
-import time, gevent, base64, math, socket, io, sys
+import time, base64, math, io, sys
 
 __author__ = 'Radek Kaczorek'
 __copyright__ = 'Copyright 2017  Radek Kaczorek'
@@ -63,21 +63,53 @@ def background_thread():
 				})
 			if isinstance(data_stream.SKY['satellites'], list):
 				socketio.emit('gpsdata', {
-				'sats': len(data_stream.SKY['satellites']),
 				'hdop': data_stream.SKY['hdop'],
-				'vdop': data_stream.SKY['vdop']
-				})
-			if isinstance(data_stream.SKY['satellites'], list):
-				satellites = "<table><tr><th colspan=5 align=left><h2>Visible Satellites<h2></th></tr><tr><th>PRN</th><th>Elevation</th><th>Azimuth</th><th>SS</th><th>Used</th></tr>"
-				for s in data_stream.SKY['satellites']:
-					satellites = satellites + "<tr><td>%d</td><td>%d</td><td>%d</td><td>%d</td><td>%s</td></tr>" % (s['PRN'], s['el'], s['az'], s['ss'], s['used'])
-				satellites = satellites + "</table>"
-				socketio.emit('gpsdata', {
-				'satellites': satellites,
+				'vdop': data_stream.SKY['vdop'],
+				'sschart': signal_strength(data_stream.SKY['satellites']),
+				'satellites': data_stream.SKY['satellites'],
 				'skymap': skymap(data_stream.SKY['satellites'])
 				})
 		else:
-			time.sleep(.1)
+			time.sleep(0.1)
+
+def signal_strength(satellites):
+	# set image size
+	imgsize = 450, 100
+
+	# create empty image
+	img = Image.new('RGBA', imgsize, (255,255,255,8))
+	draw = ImageDraw.Draw(img)
+	font = ImageFont.truetype("assets/css/Roboto-Light.ttf", 14)
+
+	x = -3
+
+	for s in satellites:
+		# set colors
+		if s['ss'] >= 40:
+			color = (153, 204, 0)
+		if s['ss'] >= 30:
+			color = (255, 153, 0)
+		if s['ss'] < 30:
+			color = (204, 0, 0)
+		if s['ss'] < 10:
+			color = (102, 102, 102)
+
+		# draw bars
+		x = x + 35
+		y = 100 - int(s['ss'])
+		draw.line((x,100,x,y), width=25, fill=color)
+		
+		# draw labels
+		draw.text((x - 12, 90), '{:3d}'.format(s['PRN']), fill=white)
+		
+	# draw title
+	draw.text((x / 2, 10), 'Signal Strength', fill=white, font=font)
+
+	# encode and return
+	imgdata = io.BytesIO()
+	img.save(imgdata, format="PNG")
+	imgdata_encoded = base64.b64encode(imgdata.getvalue()).decode()
+	return imgdata_encoded
 
 def skymap(satellites):
 	# set image size
@@ -86,6 +118,9 @@ def skymap(satellites):
 	# create empty image
 	img = Image.new('RGBA', (sz, sz), (255,255,255,0))
 	draw = ImageDraw.Draw(img)
+	font = ImageFont.truetype("assets/css/Roboto-Light.ttf", 15)
+
+	# draw arcs
 	draw.chord([(sz * 0.02, sz * 0.02), (sz * 0.98, sz * 0.98)], 0, 360, fill = mdgray, outline = black)
 	draw.text((sz/2 * 0.98 - 5, sz * 0.02), "0", fill = ltgray)
 	draw.chord([(sz * 0.05, sz * 0.05), (sz * 0.95, sz * 0.95)], 0, 360, fill = dkgray, outline = ltgray)
@@ -127,15 +162,14 @@ def skymap(satellites):
 	# satellites
 	for s in satellites:
 		if (s['PRN'] != 0) and (s['el'] + s['az'] + s['ss'] != 0) and (s['el'] >= 0 and s['az'] >= 0):
-			color = brightgreen
 			if s['ss'] >= 40:
-				color = darkgreen
+				color = (153, 204, 0)
 			if s['ss'] >= 30:
-				color = yellow
+				color = (255, 153, 0)
 			if s['ss'] < 30:
-				color = red
+				color = (204, 0, 0)
 			if s['ss'] < 10:
-				color = black
+				color = (102, 102, 102)
 
 			# circle size
 			ssz = 16
@@ -162,19 +196,17 @@ def skymap(satellites):
 				draw.arc([(x, y), (x + ssz, y + ssz)], 0, 360, fill = color)
 
 			# draw labels
-			draw.text((x + ssz/5, y + ssz/5), '{:2d}'.format(s['PRN']), fill = black)
+			draw.text((x + ssz/5, y + ssz/5), '{:2d}'.format(s['PRN']), fill = white)
 
-			# draw legend
-			draw.rectangle([(sz - 21, sz - 110), (sz - 1, sz - 10)], fill = brightgreen, outline = black)
-			draw.rectangle([(sz - 21, sz - 90), (sz - 1, sz - 10)], fill = darkgreen, outline = black)
-			draw.rectangle([(sz - 21, sz - 70), (sz - 1, sz - 10)], fill = yellow, outline = black)
-			draw.rectangle([(sz - 21, sz - 50), (sz - 1, sz - 10)], fill = red, outline = black)
-			draw.rectangle([(sz - 21, sz - 30), (sz - 1, sz - 10)], fill = black, outline = black)
-			draw.text((sz - 19, sz - 105), "40+", fill = black)
-			draw.text((sz - 19, sz - 85), "35+", fill = black)
-			draw.text((sz - 19, sz - 65), "30+", fill = black)
-			draw.text((sz - 19, sz - 45), "-30", fill = black)
-			draw.text((sz - 19, sz - 25), "-10", fill = white)
+	# draw legend
+	draw.rectangle([(sz - 26, sz - 90), (sz - 1, sz - 10)], fill = (153, 204, 0), outline = black)
+	draw.rectangle([(sz - 26, sz - 70), (sz - 1, sz - 10)], fill = (255, 153, 0), outline = black)
+	draw.rectangle([(sz - 26, sz - 50), (sz - 1, sz - 10)], fill = (204, 0, 0), outline = black)
+	draw.rectangle([(sz - 26, sz - 30), (sz - 1, sz - 10)], fill = (102, 102, 102), outline = black)
+	draw.text((sz - 21, sz - 85), "40+", fill = black)
+	draw.text((sz - 21, sz - 65), "30+", fill = black)
+	draw.text((sz - 21, sz - 45), "-30", fill = black)
+	draw.text((sz - 21, sz - 25), "-10", fill = black)
 
 	# encode and return
 	imgdata = io.BytesIO()
@@ -203,8 +235,6 @@ if __name__ == '__main__':
 	gpsd_socket.connect()
 	gpsd_socket.watch()
 	data_stream = gps3.DataStream()
-
-	socketio.run(app, host='0.0.0.0', port = 8625, debug=False)
 
 	try:
 		socketio.run(app, host='0.0.0.0', port = 8625, debug=False)
