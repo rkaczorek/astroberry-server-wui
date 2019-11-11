@@ -84,6 +84,7 @@ const UI = {
         UI.addClipboardHandlers();
         UI.addSettingsHandlers();
 		UI.addGPSControlHandlers();
+		UI.addAstroPanelControlHandlers();
 		UI.addWebmanagerControlHandlers();
         document.getElementById("noVNC_status")
             .addEventListener('click', UI.hideStatus);
@@ -311,6 +312,11 @@ const UI = {
             .addEventListener('click', UI.toggleGPSPanel);
     },
 
+    addAstroPanelControlHandlers: function() {
+        document.getElementById("astropanel_controls_button")
+            .addEventListener('click', UI.toggleAstroPanel);
+    },
+
     addConnectionControlHandlers() {
         document.getElementById("noVNC_disconnect_button")
             .addEventListener('click', UI.disconnect);
@@ -428,7 +434,6 @@ const UI = {
             UI.disableSetting('path');
             UI.disableSetting('repeaterID');
             UI.setMouseButton(1);
-            UI.updateWebmanagerButton(1);
 
             // Hide the controlbar after 2 seconds
             UI.closeControlbarTimeout = setTimeout(UI.closeControlbar, 2000);
@@ -824,6 +829,7 @@ const UI = {
         UI.closeExtraKeys();
 		UI.closeWebmanagerPanel();
 		UI.closeGPSPanel();
+		UI.closeAstroPanel();
     },
 
 /* ------^-------
@@ -860,6 +866,38 @@ const UI = {
 
 /* ------^-------
  *   /GPS
+ * ==============
+ *    ASTRO
+ * ------v------*/
+
+	openAstroPanel: function() {
+		UI.closeAllPanels();
+		UI.openControlbar();
+
+		document.getElementById('astropanel_controls')
+			.classList.add("noVNC_open");
+		document.getElementById('astropanel_controls_button')
+			.classList.add("noVNC_selected");
+	},
+
+	closeAstroPanel: function() {
+		document.getElementById('astropanel_controls')
+			.classList.remove("noVNC_open");
+		document.getElementById('astropanel_controls_button')
+			.classList.remove("noVNC_selected");
+	},
+
+	toggleAstroPanel: function() {
+		if (document.getElementById('astropanel_controls')
+			.classList.contains("noVNC_open")) {
+			UI.closeAstroPanel();
+		} else {
+			UI.openAstroPanel();
+		}
+	},
+
+/* ------^-------
+ *   /ASTRO
  * ==============
  *    WEBMANAGER
  * ------v------*/

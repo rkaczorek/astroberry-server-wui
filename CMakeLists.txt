@@ -7,10 +7,12 @@ set (VERSION_RELEASE 0)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/astroberry.version.cmake ${CMAKE_CURRENT_BINARY_DIR}/astroberry.version)
 
+set(CONFIG_INSTALL_DIR "/etc")
 set(NGINX_INSTALL_DIR "/etc/nginx")
 set(SSL_INSTALL_DIR "/etc/ssl")
 set(WWW_INSTALL_DIR "/var/www")
 set(SYSTEMD_INSTALL_DIR "/etc/systemd/system")
+
 
 message("=========================================== $ENV{DESTDIR}/${BUILD_ROOT} ==============================================")
 
@@ -21,8 +23,11 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
 	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/astroberry.key DESTINATION ${SSL_INSTALL_DIR})
         install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/html DESTINATION ${WWW_INSTALL_DIR})
 	install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/gpspanel DESTINATION ${WWW_INSTALL_DIR})
+        install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/astropanel DESTINATION ${WWW_INSTALL_DIR})
+	install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/astropanel/astropanel.conf DESTINATION ${CONFIG_INSTALL_DIR})
 	install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/files/novnc DESTINATION ${WWW_INSTALL_DIR})
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/gpspanel.service DESTINATION ${SYSTEMD_INSTALL_DIR})
+        install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/astropanel.service DESTINATION ${SYSTEMD_INSTALL_DIR})
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/indiwebmanager.service DESTINATION ${SYSTEMD_INSTALL_DIR})
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/novnc.service DESTINATION ${SYSTEMD_INSTALL_DIR})
 	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/astroberry.version DESTINATION /etc)

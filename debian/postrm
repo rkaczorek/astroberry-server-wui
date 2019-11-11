@@ -24,4 +24,4 @@ if [ $indiweb_dir ]; then
     rm -rf $indiweb_dir/views/img/webmanager.svg
     rm -rf $indiweb_dir/views/fonts/Roboto-Light.ttf
 fi
-pip3 uninstall -y gps3 python-socketio indiweb
+pip3 uninstall -y gps3 python-socketio indiweb pyephem

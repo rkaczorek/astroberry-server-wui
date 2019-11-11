@@ -11,7 +11,7 @@ if [ ! -e /root/.vnc/config.d/vncserver-x11 ]; then
 fi
 
 # Add indiweb and dependencies
-pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb
+pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb pyephem
 
 # Create symbolic links
 ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
@@ -33,8 +33,8 @@ fi
 # INDI web manager look and feel patch
 indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
 if [ $indiweb_dir ]; then
-    ln -sf /var/www/vnc/app/images/webmanager.svg $indiweb_dir/views/img/
-    ln -sf /var/www/vnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
+    ln -sf /var/www/novnc/app/images/webmanager.svg $indiweb_dir/views/img/
+    ln -sf /var/www/novnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
     cp $indiweb_dir/views/css/schoolhouse.css $indiweb_dir/views/css/schoolhouse.css.bak
     cat /var/www/html/files/indiweb.css >> $indiweb_dir/views/css/schoolhouse.css
 fi
@@ -43,6 +43,7 @@ fi
 systemctl daemon-reload
 systemctl enable vncserver-x11-serviced.service && systemctl restart vncserver-x11-serviced.service
 systemctl enable gpspanel.service && systemctl restart gpspanel.service
+systemctl enable astropanel.service && systemctl restart astropanel.service
 systemctl enable indiwebmanager.service && systemctl restart indiwebmanager.service
 systemctl enable novnc.service && systemctl restart novnc.service
 systemctl enable nginx.service && systemctl restart nginx.service

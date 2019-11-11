@@ -29,7 +29,7 @@ body {
 }
 
 h1 {
-	background-image: url("./../img/gps.svg");
+	background-image: url("./../img/astropanel.svg");
 	background-repeat: no-repeat;
 	background-position: 5px 5px;
 	background-color: rgb(110, 132, 163);
@@ -57,7 +57,7 @@ a:hover {
 
 button {
 	margin-top: 5px;
-	width: 157px;
+	width: 117px;
 }
 
 .warning {
@@ -68,120 +68,128 @@ button {
 	width: 480px;    
 }
 
-#coordtime {
-	display: block;
-	width: 480px;
-	color: #fff;
-	margin: 10px auto 0px auto;
-}
-
-.label {
-	width: 70px;
-	margin-left: 5px;
-}
-
-.gpsfix_obtained {
-	background-color: #99cc00;
-}
-
-.gpsvalues {
-	width: 150px;
-	color: white;
-	font-size: 0.90em;
-	display: inline-block;
-	text-align: left;
-	margin-left: 5px;
-}
-
-.time {
-	margin-top: 5px;
-	margin-left: 5px;
-	color: white;
-}
-
 #displayctl {
 	margin-top: 5px;
-}
-
-#mapcontainer, #skymapcontainer, #gpsdetailscontainer {
-	width: 480px;
-	height: 400px;
-	margin-top: 10px;
-}
-
-#mapcontainer {
-	display:block;
-	margin-top: 10px;
-}
-
-#skymapcontainer {
-	display:none;
-	margin-bottom: -10px;
-}
-
-#gpsdetailscontainer {
-	display:none;
-	position: relative;
-	overflow:hidden;
-}
-
-#map {
-	width: 480px;
-	height: 400px;
-}
-
-#sschart {
-	display: block;
-	height:100px;
-	position:absolute;
-	bottom: 0px;
-	margin-left: 5px;
-	z-index: 100;
-}
-
-#skymap {
-	display: block;
-	width: 340px;
-	height: 340px;
-	margin: 20px auto 0px auto;
-}
-
-#legend {
-	width: 350px;
-	text-align: left;
-	font-family: 'Roboto Light', Arial, Helvetica;
-	font-size: 0.80em;
-	margin: 5px auto 0px auto;
-}
-
-#gpsdetails {
-	display: block;
-	width: 460px;
-	font-family: 'Roboto Light', Arial, Helvetica;
-	font-size: 0.80em;
-}
-
-#gpsinfo {
-	display: inline-block;
-	vertical-align: top;
-	width: 50%;
-}
-
-.gpshdr {
-	width: 90px;
-}
-
-#gpssats {
-	display: inline-block;
-	vertical-align: top;
-	margin-left: 20px;
 }
 
 table, th, td {
 	border: none;
 	font-family: 'Roboto Light', Arial, Helvetica;
-	font-size: 1.0em;
-	color: #fff;
+	font-size: 0.90em;
+}
+
+#legend {
+	text-align: center;
+	font-family: 'Roboto Light', Arial, Helvetica;
+	font-size: 0.80em;
+}
+
+#polaris, #moon, #sun, #planets {
+	width: 480px;
+	margin-top: 10px;
+}
+
+#reticle {
+	width: 280px;
+	background-image:url('../img/reticle.png');
+	background-repeat: no-repeat;
+	background-size: 280px;
+	display:block;
+	overflow:hidden;
+	float: left;
+	margin-right: 10px;
+	margin-left: 10px;
+}
+
+.polarishdr {
+	width: 120px;
+}
+
+.polarisdata {
+	text-align: right;
+}
+
+.positionhdr {
+	width: 110px;
+}
+
+.positiondata {
+	text-align: right;
+}
+
+#position {
+	display:none;
+}
+
+#position_refresh {
+	width: 60px;
+	font-size: 0.80em;
+	padding: 0px;
+	border: none;
+	display: none;
+}
+
+#position_refresh:hover {
+	background-color: #99cc00;
+	color: white;
+}
+
+#moon {
+	display:none;
+}
+
+#moon img {
+	width: 150px;
+	margin: 50px 20px 0px 0px;
+	float: left;
+}
+
+.moonhdr {
+	width: 180px;
+}
+
+.moondata {
+	text-align: right;
+}
+
+#sun {
+        display:none;
+}
+
+#sun img {
+	width: 150px;
+	margin: 50px 20px 0px 0px;
+	float: left;
+}
+
+.sunhdr {
+	width: 180px;
+}
+
+.sundata {
+	text-align: right;
+}
+
+#planets {
+        display:none;
+}
+
+#planets img {
+	margin-top: 20px;
+}
+
+.planetshdr {
+	width: 80px;
+}
+
+.planetshdrdata {
+	width: 75px;
+	text-align: right;
+	font-weight: bold;
+}
+
+.planetsdata {
+	text-align: right;
 }
 
 .blink {
