@@ -11,7 +11,7 @@ if [ ! -e /root/.vnc/config.d/vncserver-x11 ]; then
 fi
 
 # Add indiweb and dependencies
-pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb pyephem
+pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb ephem
 
 # Create symbolic links
 ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
