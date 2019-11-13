@@ -2,5 +2,4 @@ astroberry-server-wui (2.0.0) buster; urgency=medium
 
   * Initial release.
 
- -- Radek Kaczorek <rkaczorek@gmail.com>  Sun, 10 Nov 2019 14:18:51 +0100
-
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Thu, 14 Nov 2019 00:28:13 +0100

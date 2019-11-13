@@ -1,12 +1,13 @@
 #!/bin/bash
 # postinst script for astroberry-server-wui
 
-RED='\033[0;31m'
-NC='\033[0m'
-
 # Set password for VNC remote desktop
 if [ ! -e /root/.vnc/config.d/vncserver-x11 ]; then
-    echo "astroberry" | vncpasswd -service
+    # Source debconf library.
+    . /usr/share/debconf/confmodule
+    db_get astroberry-server-wui/password
+    PASSWORD=$RET
+    echo "$PASSWORD" | vncpasswd -service
     echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
 fi
 

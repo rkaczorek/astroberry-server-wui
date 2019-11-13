@@ -1,9 +1,6 @@
 #!/bin/bash
 # postrm script for astroberry-server-wui
 
-RED='\033[0;31m'
-NC='\033[0m'
-
 # Disable astroberry site
 rm -rf /etc/nginx/sites-enabled/astroberry || true
 rm -rf /etc/nginx/sites-enabled/astroberry_ssl || true
