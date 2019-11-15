@@ -1,40 +1,40 @@
 ICONS := \
-	novnc-16x16.png \
-	novnc-24x24.png \
-	novnc-32x32.png \
-	novnc-48x48.png \
-	novnc-64x64.png
+	astroberry-16x16.png \
+	astroberry-24x24.png \
+	astroberry-32x32.png \
+	astroberry-48x48.png \
+	astroberry-64x64.png
 
 ANDROID_LAUNCHER := \
-	novnc-48x48.png \
-	novnc-72x72.png \
-	novnc-96x96.png \
-	novnc-144x144.png \
-	novnc-192x192.png
+	astroberry-48x48.png \
+	astroberry-72x72.png \
+	astroberry-96x96.png \
+	astroberry-144x144.png \
+	astroberry-192x192.png
 
 IPHONE_LAUNCHER := \
-	novnc-60x60.png \
-	novnc-120x120.png
+	astroberry-60x60.png \
+	astroberry-120x120.png
 
 IPAD_LAUNCHER := \
-	novnc-76x76.png \
-	novnc-152x152.png
+	astroberry-76x76.png \
+	astroberry-152x152.png
 
 ALL_ICONS := $(ICONS) $(ANDROID_LAUNCHER) $(IPHONE_LAUNCHER) $(IPAD_LAUNCHER)
 
 all: $(ALL_ICONS)
 
-novnc-16x16.png: novnc-icon-sm.svg
+astroberry-16x16.png: astroberry-icon-sm.svg
 	convert -density 90 \
 		-background transparent "$<" "$@"
-novnc-24x24.png: novnc-icon-sm.svg
+astroberry-24x24.png: astroberry-icon-sm.svg
 	convert -density 135 \
 		-background transparent "$<" "$@"
-novnc-32x32.png: novnc-icon-sm.svg
+astroberry-32x32.png: astroberry-icon-sm.svg
 	convert -density 180 \
 		-background transparent "$<" "$@"
 
-novnc-%.png: novnc-icon.svg
+astroberry-%.png: astroberry-icon.svg
 	convert -density $$[`echo $* | cut -d x -f 1` * 90 / 48] \
 		-background transparent "$<" "$@"
 

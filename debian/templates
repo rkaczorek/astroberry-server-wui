@@ -1,6 +1,0 @@
-Template: astroberry-system-wui/password
-Type: password
-Default:
-Description: Enter astroberry password for remote desktop
- Password will be used for remote access via VNC
- It is NOT the same password as used for ssh and file sharing

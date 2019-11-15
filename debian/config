@@ -1,8 +1,0 @@
-#!/bin/sh -e
-
-# Source debconf library.
-. /usr/share/debconf/confmodule
-
-# astroberry VNC password
-db_input high astroberry-server-wui/password || true
-db_go || true

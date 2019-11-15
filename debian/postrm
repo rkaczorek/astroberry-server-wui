@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bash -e
 # postrm script for astroberry-server-wui
 
 # Disable astroberry site
