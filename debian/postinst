@@ -24,7 +24,7 @@ ln -sf /etc/astroberry.version /var/www/html/version.html
 if [ ! -d /var/log/astroberry ]; then
     mkdir /var/log/astroberry
     chmod 750 /var/log/astroberry
-    chown nobody:adm /var/log/astroberry
+    chown astroberry:adm /var/log/astroberry
 fi
 
 # INDI web manager look and feel patch

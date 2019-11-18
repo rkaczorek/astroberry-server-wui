@@ -4,7 +4,7 @@ After=multi-user.target
 
 [Service]
 Type=idle
-User=nobody
+User=astroberry
 ExecStart=/usr/local/bin/indi-web -l /var/log/astroberry/indiwebmanager.log
 Restart=always
 RestartSec=5
