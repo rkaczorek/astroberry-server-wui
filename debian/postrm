@@ -2,23 +2,41 @@
 # postrm script for astroberry-server-wui
 
 # Disable astroberry site
-rm -rf /etc/nginx/sites-enabled/astroberry || true
-rm -rf /etc/nginx/sites-enabled/astroberry_ssl || true
+if [ -e /etc/nginx/sites-enabled/astroberry ]
+then
+    rm -rf /etc/nginx/sites-enabled/astroberry
+fi
+
+if [ -e /etc/nginx/sites-enabled/astroberry_ssl ]
+then
+    rm -rf /etc/nginx/sites-enabled/astroberry_ssl
+fi
 
 # Reactivate default site for nginx
-ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+if [ -e /etc/nginx/sites-available/default ]
+then
+    ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
+fi
 
 # Reload nginx configuration
 systemctl reload nginx
 
 # Remove astroberry version file
-rm -rf /var/www/html/version.html || true
+if [ -e /var/www/html/version.html ]
+then
+    rm -rf /var/www/html/version.html
+fi
 
 # Remove indiweb and dependencies
 indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
-if [ $indiweb_dir ]; then
+if [ $indiweb_dir ] && [ -e $indiweb_dir/views/css/schoolhouse.css.bak ] && [ -e $indiweb_dir/views/img/webmanager.svg ] && [ -e $indiweb_dir/views/fonts/Roboto-Light.ttf ]
+then
     mv -f $indiweb_dir/views/css/schoolhouse.css.bak $indiweb_dir/views/css/schoolhouse.css
     rm -rf $indiweb_dir/views/img/webmanager.svg
     rm -rf $indiweb_dir/views/fonts/Roboto-Light.ttf
 fi
-pip3 uninstall -y gps3 python-socketio indiweb ephem
+
+if [ -n "$(which pip3)" ]
+then
+    pip3 uninstall -y gps3 python-socketio indiweb ephem
+fi

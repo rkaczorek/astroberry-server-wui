@@ -8,6 +8,6 @@ Homepage: http://www.astroberry.io/
 
 Package: astroberry-server-wui
 Architecture: all
-Depends: ${shlibs:Depends}, ${misc:Depends}, libindi1 (>= 1.7), libindi-data (>= 1.7), indi-bin (>= 1.7), nginx, websockify, realvnc-vnc-server, python3-pip, python3-bottle, python3-flask, python3-flask-socketio, python3-gevent, python3-numpy, python3-pil, gpsd
+Depends: ${shlibs:Depends}, ${misc:Depends}, astroberry-server-sysmod, libindi1 (>= 1.7), libindi-data (>= 1.7), indi-bin (>= 1.7), nginx, websockify, realvnc-vnc-server, python3-pip, python3-bottle, python3-flask, python3-flask-socketio, python3-gevent, python3-numpy, python3-pil, gpsd
 Description: Astroberry Server WUI is a web interface for Astroberry Server
  ready to use astronomy desktop system for Raspberry Pi

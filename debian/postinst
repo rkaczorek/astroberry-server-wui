@@ -8,20 +8,36 @@ if [ ! -e /root/.vnc/config.d/vncserver-x11 ]; then
 fi
 
 # Add indiweb and dependencies
-pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb ephem
+if [ -n "$(which pip3)" ]
+then
+    pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb ephem
+fi
 
 # Create symbolic links
-ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
-ln -sf /etc/nginx/sites-available/astroberry_ssl /etc/nginx/sites-enabled/
+if [ -e /etc/nginx/sites-available/astroberry ]
+then
+    ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
+fi
+if [ -e /etc/nginx/sites-available/astroberry_ssl ]
+then
+    ln -sf /etc/nginx/sites-available/astroberry_ssl /etc/nginx/sites-enabled/
+fi
 
 # Remove default site for nginx
-rm -rf /etc/nginx/sites-enabled/default
+if [ -e /etc/nginx/sites-enabled/default ]
+then
+    rm -rf /etc/nginx/sites-enabled/default
+fi
 
 # Link astroberry version file
-ln -sf /etc/astroberry.version /var/www/html/version.html
+if [ -e /etc/astroberry.version ]
+then
+    ln -sf /etc/astroberry.version /var/www/html/version.html
+fi
 
 # Set log directory access rights
-if [ ! -d /var/log/astroberry ]; then
+if [ ! -d /var/log/astroberry ] && [ -n "$(cut -d: -f1 /etc/passwd | grep '^astroberry$')" ]
+then
     mkdir /var/log/astroberry
     chmod 750 /var/log/astroberry
     chown astroberry:adm /var/log/astroberry
@@ -29,7 +45,8 @@ fi
 
 # INDI web manager look and feel patch
 indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
-if [ $indiweb_dir ]; then
+if [ $indiweb_dir ] && [ -e /var/www/novnc/app/images/webmanager.svg ] && [ -e /var/www/novnc/app/fonts/Roboto-Light.ttf ] && [ -e $indiweb_dir/views/css/schoolhouse.css ] && [ -e /var/www/html/files/indiweb.css ]
+then
     ln -sf /var/www/novnc/app/images/webmanager.svg $indiweb_dir/views/img/
     ln -sf /var/www/novnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
     cp $indiweb_dir/views/css/schoolhouse.css $indiweb_dir/views/css/schoolhouse.css.bak
