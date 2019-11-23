@@ -1,3 +1,9 @@
+astroberry-server-wui (2.0.1) buster; urgency=medium
+
+  * Fixing Astro Panel location order
+
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Sat, 23 Nov 2019 15:37:09 +0100
+
 astroberry-server-wui (2.0.0) buster; urgency=medium
 
   * Initial release.
