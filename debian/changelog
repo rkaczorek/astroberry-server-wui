@@ -2,7 +2,7 @@ astroberry-server-wui (2.0.2) buster; urgency=medium
 
   * Updating Astro Panel and GPS Panel
 
- -- Radek Kaczorek <rkaczorek@gmail.com>  Sun, 01 Dec 2019 12:14:46 +0100
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Sun, 01 Dec 2019 19:18:56 +0100
 
 astroberry-server-wui (2.0.1) buster; urgency=medium
 
