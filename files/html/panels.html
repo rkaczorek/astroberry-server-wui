@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <!--
+    Web Panels for Astroberry Server
+    -->
+    <title>Astroberry Server</title>
+    <meta charset="utf-8" />
+    <link rel="icon" sizes="16x16" type="image/png" href="files/astroberry-16x16.png">
+    <style>
+    <!-- https://www.dafont.com/roboto.font -->
+    @font-face {font-family: 'Roboto Light';font-style: normal;src: local('?'), url('/files/Roboto-Light.ttf') format('truetype');}
+    html {height:100%;}
+    body {margin:0;padding:20;background-color:rgb(110, 132, 163);background-image: url("/files/background.jpg");background-repeat:repeat-y;background-size:cover;background-position:top center;font-family:'Roboto Light', Arial, Helvetica;color: #fff;}
+    #panels_container {padding:10px;}
+    .panel {float:left;display:block;width:500px;margin:20px 10px;padding:20px;background-color:rgb(110, 132, 163);border-radius:10px;}
+    a {color:#fcba03;font-weight:bold;text-decoration:none;}
+    a:visited {color:#fcba03;font-weight:bold;text-decoration:none;}
+    </style>
+
+</head>
+
+<body>
+    <!-- noVNC Control Bar -->
+    <div id="panels_container">
+
+        <!-- GPS Panel -->
+        <div id="gpspanel" class="panel">
+             <iframe id="gpspanel_iframe" width="480" height="590" frameborder="0" src="/gpspanel/"></iframe>
+        </div>
+
+        <!-- Astro Panel -->
+        <div id="astropanel" class="panel">
+             <iframe id="astropanel_iframe" width="480" height="590" frameborder="0" src="/astropanel/"></iframe>
+        </div>
+
+        <!-- Webmanager Panel -->
+        <div id="webmanager" class="panel">
+            <iframe id="webmanager_iframe" width="480" height="590" frameborder="0" src="/indiwebmanager/"></iframe>
+        </div>
+
+    </div>
+
+</body>
+
+</html>
