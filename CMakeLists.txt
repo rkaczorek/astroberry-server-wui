@@ -3,7 +3,7 @@ PROJECT(astroberry-server-wui NONE)
 
 set (VERSION_MAJOR 2)
 set (VERSION_MINOR 0)
-set (VERSION_RELEASE 0)
+set (VERSION_RELEASE 1)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/astroberry.version.cmake ${CMAKE_CURRENT_BINARY_DIR}/astroberry.version)
 

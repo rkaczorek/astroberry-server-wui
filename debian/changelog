@@ -1,3 +1,15 @@
+astroberry-server-wui (2.0.4) buster; urgency=medium
+
+  * Minor release
+
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Sat, 01 Feb 2020 13:05:31 +0100
+
+astroberry-server-wui (2.0.3) buster; urgency=medium
+
+  * Panels website added
+
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Mon, 02 Dec 2019 19:58:17 +0100
+
 astroberry-server-wui (2.0.2) buster; urgency=medium
 
   * Updating Astro Panel and GPS Panel
