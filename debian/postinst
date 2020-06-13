@@ -1,63 +1,87 @@
-#!/bin/bash -e
+#!/bin/bash
 # postinst script for astroberry-server-wui
 
-# Set password for VNC remote desktop
-if [ ! -e /root/.vnc/config.d/vncserver-x11 ]; then
+# set password for VNC remote desktop
+if [ "$1" = "configure" ] && [ ! -e /root/.vnc/config.d/vncserver-x11 ] && [ -z "$(grep '^Password=ce77cd632e94ca19845f7deae77a1828$' /root/.vnc/config.d/vncserver-x11)" ]; then
     echo "astroberry" | vncpasswd -service
     echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
 fi
-
-# Add indiweb and dependencies
-if [ -n "$(which pip3)" ]
-then
-    pip3 install --no-warn-script-location --upgrade gps3 python-socketio indiweb ephem
+if [ "$1" = "configure" ] && [ ! -e /root/.vnc/config.d/vncserver-x11 ] && [ -z "$(grep 'Authentication=VncAuth' /root/.vnc/config.d/vncserver-x11)" ]; then
+    echo "Authentication=VncAuth" >> /root/.vnc/config.d/vncserver-x11
 fi
 
-# Create symbolic links
-if [ -e /etc/nginx/sites-available/astroberry ]
-then
-    ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
-fi
-if [ -e /etc/nginx/sites-available/astroberry_ssl ]
-then
-    ln -sf /etc/nginx/sites-available/astroberry_ssl /etc/nginx/sites-enabled/
+# set log directory access rights
+if [ "$1" = "configure" ] && [ ! -d /var/log/astroberry ] && [ -n "$(cut -d: -f1 /etc/passwd | grep '^astroberry$')" ]; then
+	mkdir /var/log/astroberry
+	chmod 750 /var/log/astroberry
+	chown astroberry:adm /var/log/astroberry
 fi
 
-# Remove default site for nginx
-if [ -e /etc/nginx/sites-enabled/default ]
-then
-    rm -rf /etc/nginx/sites-enabled/default
+# add required python packages
+if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep gps3)" ]; then
+	pip3 install --no-warn-script-location gps3
+fi
+if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep python-socketio)" ]; then
+        pip3 install --no-warn-script-location python-socketio
+fi
+if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep indiweb)" ]; then
+        pip3 install --no-warn-script-location indiweb
+fi
+if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep ephem)" ]; then
+        pip3 install --no-warn-script-location ephem
 fi
 
-# Link astroberry version file
-if [ -e /etc/astroberry.version ]
-then
-    ln -sf /etc/astroberry.version /var/www/html/version.html
+# create symbolic links
+if [ "$1" = "configure" ] && [ ! -e /etc/nginx/sites-enabled/astroberry ] && [ -e /etc/nginx/sites-available/astroberry ]; then
+	ln -sf /etc/nginx/sites-available/astroberry /etc/nginx/sites-enabled/
+fi
+if [ "$1" = "configure" ] && [ ! -e /etc/nginx/sites-enabled/astroberry_ssl ] && [ -e /etc/nginx/sites-available/astroberry_ssl ]; then
+	ln -sf /etc/nginx/sites-available/astroberry_ssl /etc/nginx/sites-enabled/
 fi
 
-# Set log directory access rights
-if [ ! -d /var/log/astroberry ] && [ -n "$(cut -d: -f1 /etc/passwd | grep '^astroberry$')" ]
-then
-    mkdir /var/log/astroberry
-    chmod 750 /var/log/astroberry
-    chown astroberry:adm /var/log/astroberry
+# remove default site for nginx
+if [ "$1" = "configure" ] && [ -e /etc/nginx/sites-enabled/default ]; then
+	rm -rf /etc/nginx/sites-enabled/default
+fi
+
+# link astroberry version file
+if [ "$1" = "configure" ] && [ ! -e /var/www/html/version.html ] && [ -e /etc/astroberry.version ]; then
+	ln -sf /etc/astroberry.version /var/www/html/version.html
 fi
 
 # INDI web manager look and feel patch
-indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
-if [ $indiweb_dir ] && [ -e /var/www/novnc/app/images/webmanager.svg ] && [ -e /var/www/novnc/app/fonts/Roboto-Light.ttf ] && [ -e $indiweb_dir/views/css/schoolhouse.css ] && [ -e /var/www/html/files/indiweb.css ]
-then
-    ln -sf /var/www/novnc/app/images/webmanager.svg $indiweb_dir/views/img/
-    ln -sf /var/www/novnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
-    cp $indiweb_dir/views/css/schoolhouse.css $indiweb_dir/views/css/schoolhouse.css.bak
-    cat /var/www/html/files/indiweb.css >> $indiweb_dir/views/css/schoolhouse.css
+if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep indiweb)" ]; then
+	indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
+	if [ $indiweb_dir ] && [ -e /var/www/novnc/app/images/webmanager.svg ] && [ -e /var/www/novnc/app/fonts/Roboto-Light.ttf ] && [ -e $indiweb_dir/views/css/schoolhouse.css ] && [ -e /var/www/html/files/indiweb.css ]
+	then
+	    ln -sf /var/www/novnc/app/images/webmanager.svg $indiweb_dir/views/img/
+	    ln -sf /var/www/novnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
+	    cp $indiweb_dir/views/css/schoolhouse.css $indiweb_dir/views/css/schoolhouse.css.bak
+	    cat /var/www/html/files/indiweb.css >> $indiweb_dir/views/css/schoolhouse.css
+	    cp $indiweb_dir/views/form.tpl $indiweb_dir/views/form.tpl.bak
+	    mv -f /tmp/form.tpl $indiweb_dir/views/form.tpl
+	fi
 fi
 
-# Activate basic services
-systemctl daemon-reload
-systemctl enable vncserver-x11-serviced.service && systemctl restart vncserver-x11-serviced.service
-systemctl enable gpspanel.service && systemctl restart gpspanel.service
-systemctl enable astropanel.service && systemctl restart astropanel.service
-systemctl enable indiwebmanager.service && systemctl restart indiwebmanager.service
-systemctl enable novnc.service && systemctl restart novnc.service
-systemctl enable nginx.service && systemctl restart nginx.service
+if [ "$1" = "configure" ]; then
+
+	# Refresh services files
+	systemctl daemon-reload
+
+	# Activate basic services
+	systemctl enable vncserver-x11-serviced.service
+	systemctl enable gpspanel.service
+	systemctl enable astropanel.service
+	systemctl enable indiwebmanager.service
+	systemctl enable novnc.service
+	systemctl enable nginx.service
+
+	# Reload astroberry services
+	systemctl restart vncserver-x11-serviced.service
+	systemctl restart gpspanel.service
+	systemctl restart astropanel.service
+	systemctl restart indiwebmanager.service
+	systemctl restart novnc.service
+	systemctl restart nginx.service
+
+fi

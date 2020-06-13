@@ -1,9 +1,11 @@
 #!/bin/bash
-# postrm script for astroberry-server-wui
+# prerm script for astroberry-server-wui
 
-# Disable astroberry services
-systemctl stop gpspanel.service && systemctl disable gpspanel.service
-systemctl stop astropanel.service && systemctl disable astropanel.service
-systemctl stop indiwebmanager.service && systemctl disable indiwebmanager.service
-systemctl stop novnc.service && systemctl disable novnc.service
+if [ "$1" = "remove" -o "$1" = "purge" ]
+then
+        systemctl stop gpspanel.service && systemctl disable gpspanel.service
+        systemctl stop astropanel.service && systemctl disable astropanel.service
+        systemctl stop indiwebmanager.service && systemctl disable indiwebmanager.service
+        systemctl stop novnc.service && systemctl disable novnc.service
+fi
 

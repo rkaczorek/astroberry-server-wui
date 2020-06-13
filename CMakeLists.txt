@@ -3,7 +3,7 @@ PROJECT(astroberry-server-wui NONE)
 
 set (VERSION_MAJOR 2)
 set (VERSION_MINOR 0)
-set (VERSION_RELEASE 1)
+set (VERSION_RELEASE 2)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/astroberry.version.cmake ${CMAKE_CURRENT_BINARY_DIR}/astroberry.version)
 
@@ -22,6 +22,7 @@ if (${CMAKE_SYSTEM_NAME} MATCHES "Linux")
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/gpspanel/gpspanel.service DESTINATION ${CONFIG_INSTALL_DIR}/systemd/system)
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/astropanel/astropanel.service DESTINATION ${CONFIG_INSTALL_DIR}/systemd/system)
         install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/novnc/novnc.service DESTINATION ${CONFIG_INSTALL_DIR}/systemd/system)
-	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/indiwebmanager.service DESTINATION ${CONFIG_INSTALL_DIR}/systemd/system)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/indiweb/form.tpl DESTINATION /tmp)
+	install(FILES ${CMAKE_CURRENT_SOURCE_DIR}/files/indiweb/indiwebmanager.service DESTINATION ${CONFIG_INSTALL_DIR}/systemd/system)
 	install(FILES ${CMAKE_CURRENT_BINARY_DIR}/astroberry.version DESTINATION ${CONFIG_INSTALL_DIR})
 endif()

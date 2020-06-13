@@ -1,42 +1,54 @@
-#!/bin/bash -e
+#!/bin/bash
 # postrm script for astroberry-server-wui
 
-# Disable astroberry site
-if [ -e /etc/nginx/sites-enabled/astroberry ]
-then
-    rm -rf /etc/nginx/sites-enabled/astroberry
+# disable astroberry site
+if [ "$1" = "remove" -o "$1" = "purge" ] && [ -e /etc/nginx/sites-enabled/astroberry ]; then
+    rm -f /etc/nginx/sites-enabled/astroberry
 fi
 
-if [ -e /etc/nginx/sites-enabled/astroberry_ssl ]
+if [ "$1" = "remove" -o "$1" = "purge" ] && [ -e /etc/nginx/sites-enabled/astroberry_ssl ]
 then
-    rm -rf /etc/nginx/sites-enabled/astroberry_ssl
+    rm -f /etc/nginx/sites-enabled/astroberry_ssl
 fi
 
-# Reactivate default site for nginx
-if [ -e /etc/nginx/sites-available/default ]
+# reactivate default site for nginx
+if [ "$1" = "remove" -o "$1" = "purge" ] && [ -e /etc/nginx/sites-available/default ] && [ ! -e /etc/nginx/sites-enabled/default ]
 then
     ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 fi
 
-# Reload nginx configuration
-systemctl reload nginx
-
-# Remove astroberry version file
-if [ -e /var/www/html/version.html ]
-then
-    rm -rf /var/www/html/version.html
+# remove astroberry version file
+if [ "$1" = "remove" -o "$1" = "purge" ] && [ -e /var/www/html/version.html ]; then
+    rm -f /var/www/html/version.html
 fi
 
-# Remove indiweb and dependencies
-indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
-if [ $indiweb_dir ] && [ -e $indiweb_dir/views/css/schoolhouse.css.bak ] && [ -e $indiweb_dir/views/img/webmanager.svg ] && [ -e $indiweb_dir/views/fonts/Roboto-Light.ttf ]
-then
-    mv -f $indiweb_dir/views/css/schoolhouse.css.bak $indiweb_dir/views/css/schoolhouse.css
-    rm -rf $indiweb_dir/views/img/webmanager.svg
-    rm -rf $indiweb_dir/views/fonts/Roboto-Light.ttf
+# clear custom changes in indiweb
+if [ "$1" = "remove" -o "$1" = "purge" ] && [ -n "$(which pip3)" ]; then
+	indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
+	if [ $indiweb_dir ] && [ -e $indiweb_dir/views/css/schoolhouse.css.bak ]; then
+	    mv -f $indiweb_dir/views/css/schoolhouse.css.bak $indiweb_dir/views/css/schoolhouse.css
+	fi
+        if [ $indiweb_dir ] && [ -e $indiweb_dir/views/img/webmanager.svg ]; then
+            rm -f $indiweb_dir/views/img/webmanager.svg
+        fi
+        if [ $indiweb_dir ] && [ -e $indiweb_dir/views/fonts/Roboto-Light.ttf ]; then
+            rm -f $indiweb_dir/views/fonts/Roboto-Light.ttf
+        fi
+        if [ $indiweb_dir ] && [ -e $indiweb_dir/views/form.tpl.bak ]; then
+	    mv -f $indiweb_dir/views/form.tpl.bak $indiweb_dir/views/form.tpl
+        fi
 fi
 
-if [ -n "$(which pip3)" ]
+if [ "$1" = "remove" -o "$1" = "purge" ]
 then
-    pip3 uninstall -y gps3 python-socketio indiweb ephem
+	systemctl restart nginx.service
+fi
+
+if [ "$1" = "upgrade" ]
+then
+        systemctl restart gpspanel.service
+        systemctl restart astropanel.service
+        systemctl restart indiwebmanager.service
+        systemctl restart novnc.service
+	systemctl restart nginx.service
 fi

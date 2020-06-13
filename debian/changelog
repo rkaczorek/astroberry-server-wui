@@ -1,3 +1,15 @@
+astroberry-server-wui (2.0.6) buster; urgency=medium
+
+  * Fix for post install/remove scripts
+
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Thu, 11 Jun 2020 23:21:20 +0200
+
+astroberry-server-wui (2.0.5) buster; urgency=medium
+
+  * Release version 2.0.2 (RPi 4B 8GB supported)
+
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Wed, 10 Jun 2020 00:56:48 +0200
+
 astroberry-server-wui (2.0.4) buster; urgency=medium
 
   * Minor release
