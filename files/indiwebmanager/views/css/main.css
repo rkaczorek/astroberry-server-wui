@@ -1,0 +1,153 @@
+@font-face {
+	font-family: 'Roboto Light';
+	font-style: normal;
+	src: local('?'), url('../fonts/Roboto-Light.ttf') format('truetype');
+}
+
+body {
+	margin: 0px;
+	padding: 0px;
+	color: #fff;
+	font-family: 'Roboto Light', Arial, Helvetica;
+	background-color: rgb(110, 132, 163);
+	font-size: 12px;
+}
+
+a {
+	color:#636365;
+}
+
+h1 {color:#3f4944;}
+h2 {color:#666666;}
+h3 {color:#1d7886;text-transform:uppercase;}
+h4 {
+	background-image: url("./../img/webmanager.svg");
+	background-repeat: no-repeat;
+	background-position: 5px 5px ;
+	background-color: rgb(110, 132, 163);
+	border-radius: 5px;
+	color:#fff;
+	font-size: 20px;
+	font-weight: bold;
+	padding: 10px 10px 10px 35px;
+	margin: 0px;
+}
+h5 {color:#c98344;}
+
+.container {
+	padding-left:0;
+}
+
+.btn {
+	border-radius:0;
+	background-color: #999;
+	color:#fff;
+}
+
+.btn-icon {
+	padding: 6px 8px 1px 8px;
+}
+
+.btn-xs {
+	padding: 1px 5px;
+}
+
+.form-group {
+    margin-bottom: 10px;
+}
+
+.form-control {
+	border-radius: 0;
+	font-size: 1.0em;
+}
+
+label {
+	font-size: 1.2em;
+	margin-bottom: 2px;
+}
+
+input[type=text], input[type=password],textarea, select, .search-query {
+	border-radius:0;
+}
+
+.checkbox-inline {
+	font-size: 1.0em;
+	padding-right: 10px;
+}
+
+#profile-action {
+	padding-top: 3px;
+}
+
+#profile_auto_start, #profile_auto_connect {
+	vertical-align: top;
+}
+
+.dropdown-menu, .filter-option  {
+	font-size: 12px;
+}
+
+.dropdown-header {
+	background-color: #d9edf7;
+	color: #31708f;
+}
+
+#server_command {
+	padding: .375rem 1.0rem;
+	margin-bottom: 10px;
+	background-color: #009933;
+	color: #fff;
+	border: 0;
+	border-radius: 3px;
+}
+
+#server_command:hover {
+	color:#666;
+	background-color:#aaa;
+}
+
+#server_notify {
+	margin-bottom: 10px;
+}
+
+#server_notify p {
+	padding: 6px 10px;
+}
+
+#server_notify ul {
+	list-style: none;
+	padding: 10px 0px 0px 10px;
+	margin-bottom: 0;
+}
+
+#server_notify li {
+	display: inline-block;
+	margin-right: 5px;
+	margin-bottom: 3px;
+	min-width: 140px;
+}
+
+#notify_message .alert {
+	border-radius: 5px;
+}
+
+.alert {
+	border-radius:0;
+	padding: 15px;
+	margin-bottom: 0px;
+}
+
+.well {
+  	border-width:0;
+	border-radius:0;
+	background-color: #666;
+	margin-bottom: 0px;
+}
+
+.ui-tooltip {
+	font-size: 1.0em;
+}
+
+.fa {
+	font-size: 1.1em;
+}

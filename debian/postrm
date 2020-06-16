@@ -22,23 +22,6 @@ if [ "$1" = "remove" -o "$1" = "purge" ] && [ -e /var/www/html/version.html ]; t
     rm -f /var/www/html/version.html
 fi
 
-# clear custom changes in indiweb
-if [ "$1" = "remove" -o "$1" = "purge" ] && [ -n "$(which pip3)" ]; then
-	indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
-	if [ $indiweb_dir ] && [ -e $indiweb_dir/views/css/schoolhouse.css.bak ]; then
-	    mv -f $indiweb_dir/views/css/schoolhouse.css.bak $indiweb_dir/views/css/schoolhouse.css
-	fi
-        if [ $indiweb_dir ] && [ -e $indiweb_dir/views/img/webmanager.svg ]; then
-            rm -f $indiweb_dir/views/img/webmanager.svg
-        fi
-        if [ $indiweb_dir ] && [ -e $indiweb_dir/views/fonts/Roboto-Light.ttf ]; then
-            rm -f $indiweb_dir/views/fonts/Roboto-Light.ttf
-        fi
-        if [ $indiweb_dir ] && [ -e $indiweb_dir/views/form.tpl.bak ]; then
-	    mv -f $indiweb_dir/views/form.tpl.bak $indiweb_dir/views/form.tpl
-        fi
-fi
-
 if [ "$1" = "remove" -o "$1" = "purge" ]
 then
 	systemctl restart nginx.service

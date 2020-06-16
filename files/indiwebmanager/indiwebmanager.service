@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=idle
 User=astroberry
-ExecStart=/usr/local/bin/indi-web -l /var/log/astroberry/indiwebmanager.log
+ExecStart=/usr/bin/python3 /var/www/indiwebmanager/main.py -v -l /var/log/astroberry/indiwebmanager.log
 Restart=always
 RestartSec=5
 

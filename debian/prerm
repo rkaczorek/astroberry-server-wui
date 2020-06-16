@@ -8,4 +8,3 @@ then
         systemctl stop indiwebmanager.service && systemctl disable indiwebmanager.service
         systemctl stop novnc.service && systemctl disable novnc.service
 fi
-

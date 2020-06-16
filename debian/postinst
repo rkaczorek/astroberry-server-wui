@@ -24,9 +24,6 @@ fi
 if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep python-socketio)" ]; then
         pip3 install --no-warn-script-location python-socketio
 fi
-if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep indiweb)" ]; then
-        pip3 install --no-warn-script-location indiweb
-fi
 if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep ephem)" ]; then
         pip3 install --no-warn-script-location ephem
 fi
@@ -47,20 +44,6 @@ fi
 # link astroberry version file
 if [ "$1" = "configure" ] && [ ! -e /var/www/html/version.html ] && [ -e /etc/astroberry.version ]; then
 	ln -sf /etc/astroberry.version /var/www/html/version.html
-fi
-
-# INDI web manager look and feel patch
-if [ "$1" = "configure" ] && [ -n "$(which pip3)" ] && [ -z "$(pip3 list | grep indiweb)" ]; then
-	indiweb_dir="$(pip3 show indiweb | grep Location|cut -d: -f2 | xargs)/indiweb"
-	if [ $indiweb_dir ] && [ -e /var/www/novnc/app/images/webmanager.svg ] && [ -e /var/www/novnc/app/fonts/Roboto-Light.ttf ] && [ -e $indiweb_dir/views/css/schoolhouse.css ] && [ -e /var/www/html/files/indiweb.css ]
-	then
-	    ln -sf /var/www/novnc/app/images/webmanager.svg $indiweb_dir/views/img/
-	    ln -sf /var/www/novnc/app/fonts/Roboto-Light.ttf $indiweb_dir/views/fonts/
-	    cp $indiweb_dir/views/css/schoolhouse.css $indiweb_dir/views/css/schoolhouse.css.bak
-	    cat /var/www/html/files/indiweb.css >> $indiweb_dir/views/css/schoolhouse.css
-	    cp $indiweb_dir/views/form.tpl $indiweb_dir/views/form.tpl.bak
-	    mv -f /tmp/form.tpl $indiweb_dir/views/form.tpl
-	fi
 fi
 
 if [ "$1" = "configure" ]; then

@@ -827,9 +827,9 @@ const UI = {
         UI.closePowerPanel();
         UI.closeClipboardPanel();
         UI.closeExtraKeys();
-		UI.closeWebmanagerPanel();
-		UI.closeGPSPanel();
-		UI.closeAstroPanel();
+	UI.closeWebmanagerPanel();
+	UI.closeGPSPanel();
+	UI.closeAstroPanel();
     },
 
 /* ------^-------
