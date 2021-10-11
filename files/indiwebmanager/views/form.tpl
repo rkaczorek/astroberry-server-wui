@@ -12,7 +12,7 @@
 
 	<!-- Set the page to the width of the device and set the zoon level -->
 	<meta name="viewport" content="width = device-width, initial-scale = 1">
-	<title>INDI Web Manager</title>
+	<title>Device Manager</title>
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/jquery-ui.min.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/bootstrap-select.min.css">
@@ -28,7 +28,7 @@
 
 <div class="container">
 
-	<h4>INDI Web Manager</h4>
+	<h4>Device Manager</h4>
 
 	<div id="firstrow" class="row">
 		<div class="col-sm-6">

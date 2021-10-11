@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 2.8)
 PROJECT(astroberry-server-wui NONE)
 
 set (VERSION_MAJOR 2)
-set (VERSION_MINOR 0)
-set (VERSION_RELEASE 3)
+set (VERSION_MINOR 8)
+set (VERSION_RELEASE 0)
 
 configure_file(${CMAKE_CURRENT_SOURCE_DIR}/files/astroberry.version.cmake ${CMAKE_CURRENT_BINARY_DIR}/astroberry.version)
 
