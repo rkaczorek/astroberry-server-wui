@@ -38,6 +38,7 @@ server {
        proxy_set_header    Connection "upgrade";
        proxy_read_timeout 90;
        proxy_buffering off;
+       add_header Cache-Control no-cache;
     }
 
     location /websockify {
@@ -47,6 +48,7 @@ server {
        proxy_set_header Connection "upgrade";
        proxy_read_timeout 90;
        proxy_buffering off;
+       add_header Cache-Control no-cache;
     }
 
     ########### INDI webmanager block ########## 
