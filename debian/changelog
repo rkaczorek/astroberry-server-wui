@@ -1,3 +1,9 @@
+astroberry-server-wui (2.0.9) buster; urgency=medium
+
+  * Sync with upstream
+
+ -- Radek Kaczorek <rkaczorek@gmail.com>  Mon, 15 Aug 2022 13:17:00 +0000
+
 astroberry-server-wui (2.0.8) buster; urgency=medium
 
   * Minor WUI adjustments
