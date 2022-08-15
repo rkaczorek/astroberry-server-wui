@@ -202,6 +202,7 @@ function removeProfile() {
         success: function() {
             //console.log("delete profile " + name);
             $("#profiles option:selected").remove();
+            $("#profiles").selectpicker('refresh');
             loadCurrentProfileDrivers();
 
             $("#notify_message").html('<div class="alert alert-success">Profile ' + name + ' deleted.</div>').fadeIn().delay(4000).fadeOut("slow");
@@ -280,7 +281,6 @@ function getActiveDrivers() {
             return;
         }
     });
-
 }
 
 

@@ -6,6 +6,7 @@ import logging
 import argparse
 import socket
 from threading import Timer
+import subprocess
 
 from bottle import Bottle, run, template, static_file, request, response, BaseRequest, default_app
 from indi_server import IndiServer, INDI_PORT, INDI_FIFO, INDI_CONFIG_DIR
@@ -112,6 +113,12 @@ def start_profile(profile):
 def callback(path):
     """Serve static files"""
     return static_file(path, root=views_path)
+
+
+@app.route('/favicon.ico', method='GET')
+def get_favicon():
+    """Serve favicon"""
+    return static_file('favicon.ico', root=views_path)
 
 
 @app.route('/')

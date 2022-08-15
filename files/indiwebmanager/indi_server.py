@@ -27,7 +27,7 @@ class IndiServer(object):
         call(['mkfifo', self.__fifo])
 
     def __run(self, port):
-        cmd = 'indiserver -p %d -m 100 -v -f %s > /tmp/indiserver.log 2>&1 &' % \
+        cmd = 'indiserver -p %d -m 1000 -v -f %s > /tmp/indiserver.log 2>&1 &' % \
             (port, self.__fifo)
         logging.info(cmd)
         call(cmd, shell=True)
@@ -39,6 +39,7 @@ class IndiServer(object):
         if driver.skeleton:
             cmd += ' -s "%s"' % driver.skeleton
 
+        cmd += ' -n "%s"' % driver.label
         cmd = cmd.replace('"', '\\"')
         full_cmd = 'echo "%s" > %s' % (cmd, self.__fifo)
         logging.info(full_cmd)
@@ -70,9 +71,6 @@ class IndiServer(object):
             self.start_driver(driver)
 
     def stop(self):
-        if not self.is_running():
-            return
-
         cmd = ['pkill', '-9', 'indiserver']
         logging.info(' '.join(cmd))
         ret = call(cmd)
